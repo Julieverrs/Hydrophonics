@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controls</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file -->
+    <style>
+        /* Existing styles for buttons */
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background-color: #333; /* Default background */
+            color: white; /* Default text color */
+            cursor: pointer;
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+        }
+
+        /* Active button styles */
+        .active {
+            background-color: gold; /* Active button color */
+            color: black; /* Text color for active button */
+        }
+
+        .control-container {
+            margin-top: 20px; /* Space above control container */
+            padding: 20px; /* Add padding inside the container */
+            border: 1px solid #ccc; /* Optional border for the container */
+            border-radius: 10px; /* Rounded corners for the container */
+            background-color: #f9f9f9; /* Light background for the container */
+        }
+
+        .settings {
+            margin-top: 20px; /* Space above settings section */
+            display: none; /* Hide settings by default */
+        }
+
+        .button-container {
+            margin-top: 20px; /* Space above button container */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/controls">Controls</a></li>
+            <li><a href="/admin/logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1 style="text-align: center;">Controls</h1> <!-- Centered title -->
+        
+        <div class="control-container">
+            <h2>Irrigation Control</h2>
+            <label for="mode">Mode:</label>
+            <button id="manual" onclick="setMode('manual', this)">Manual</button>
+            <button id="automatic" onclick="setMode('automatic', this)">Automatic</button>
+
+            <!-- Settings Section -->
+            <div id="settings" class="settings">
+                <h3 id="modeLabel"></h3>
+                <div id="timerOptions"></div>
+            </div>
+
+            <div class="button-container">
+                <button onclick="resetSettings()">Reset</button>
+                <button onclick="applySettings()">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to set the mode (Manual/Automatic)
+        function setMode(mode, button) {
+            console.log('Button clicked:', mode); // Log clicked mode
+
+            // Remove active class from all mode buttons
+            const modeButtons = document.querySelectorAll('.control-container button:not([onclick*="setTimer"])');
+            modeButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.backgroundColor = '#333'; // Reset background color
+            });
+
+            // Add active class to the clicked mode button
+            button.classList.add('active');
+            button.style.backgroundColor = 'gold'; // Set background color directly
+
+            // Update settings based on the mode
+            const settings = document.getElementById('settings');
+            const modeLabel = document.getElementById('modeLabel');
+            const timerOptions = document.getElementById('timerOptions');
+
+            // Clear previous timer options
+            timerOptions.innerHTML = '';
+
+            if (mode === 'manual') {
+                modeLabel.textContent = 'Manual Settings';
+                timerOptions.innerHTML = `
+                    <label for="timer">Timer:</label>
+                    <button onclick="setTimer(5, this)">5 mins</button>
+                    <button onclick="setTimer(10, this)">10 mins</button>
+                    <button onclick="setTimer(15, this)">15 mins</button>
+                    <button onclick="setTimer(20, this)">20 mins</button>
+                `;
+            } else if (mode === 'automatic') {
+                modeLabel.textContent = 'Automatic Settings';
+                timerOptions.innerHTML = `
+                    <h4>Timer Set:</h4>
+                    <button onclick="setTimer(1, this)">1 Hour</button>
+                    <button onclick="setTimer(2, this)">2 Hours</button>
+                    <button onclick="setTimer(3, this)">3 Hours</button>
+                    <p>Time interval is every 20 mins</p>
+                `;
+            }
+
+            // Show settings section
+            settings.style.display = 'block';
+        }
+
+        // Function to set the timer
+        function setTimer(value, button) {
+            // Determine if value is in minutes or hours
+            const isManualMode = document.getElementById('modeLabel').textContent === 'Manual Settings';
+            const unit = isManualMode ? 'minute(s)' : 'hour(s)';
+
+            console.log('Timer set for:', value, unit); // Log value with correct unit
+
+            // Remove active class from all timer buttons
+            const timerButtons = document.querySelectorAll('.settings button');
+            timerButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.backgroundColor = '#333'; // Reset background color
+            });
+
+            // Add active class to the clicked timer button
+            button.classList.add('active');
+            button.style.backgroundColor = 'gold'; // Set background color directly
+
+            alert('Timer set for: ' + value + ' ' + unit); // Correct alert for minutes or hours
+        }
+
+        // Function to reset all settings
+        function resetSettings() {
+            // Remove active class from all mode buttons
+            const modeButtons = document.querySelectorAll('.control-container button:not([onclick*="setTimer"])');
+            modeButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.backgroundColor = '#333'; // Reset background color
+            });
+
+            // Remove active class from all timer buttons
+            const timerButtons = document.querySelectorAll('.settings button');
+            timerButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.backgroundColor = '#333'; // Reset background color
+            });
+
+            // Clear the settings section
+            const settings = document.getElementById('settings');
+            settings.style.display = 'none'; // Hide settings
+            document.getElementById('modeLabel').textContent = ''; // Clear mode label
+            document.getElementById('timerOptions').innerHTML = ''; // Clear timer options
+        }
+
+        // Function to apply settings
+        function applySettings() {
+            alert('Apply successfully'); // Notify user that settings have been applied
+        }
+    </script>
+</body>
+</html>

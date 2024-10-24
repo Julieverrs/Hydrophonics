@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+    <style>
+        /* Add some basic styling for the dashboard layout */
+        body {
+            display: flex;
+            background-color: #f8f9fa; /* Optional: set a background color for the body */
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            height: 100%;
+            padding: 15px;
+        }
+        
+        .sidebar h2 {
+            color: gold;
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .main-content {
+            margin-left: 220px; /* Add space for the sidebar */
+            padding: 20px;
+            width: calc(100% - 240px); /* Full width minus sidebar */
+        }
+
+        .temperature-container {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            text-align: center; /* Center-align the text */
+        }
+
+        .temperature-container h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .temperature-container .temp-label {
+            font-size: 24px;
+            color: #ff5733; /* Optional: set a color for the temperature */
+            margin: 10px 0; /* Space around the temperature */
+        }
+
+        .temperature-container p {
+            margin: 0;
+            color: #666;
+        }
+
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/controls">Controls</a></li>
+            <li><a href="/admin/logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>Dashboard</h1>
+        <p>This is the admin dashboard.</p>
+
+        <!-- Temperature container -->
+        <div class="temperature-container">
+            <h3>TEMPERATURE</h3>
+            <div class="temp-label">35°C</div> <!-- Added the temperature label here -->
+            <p>As of January 1, 2024</p>
+        </div>
+
+        <!-- Line charts -->
+        <canvas id="lineChart1" width="400" height="200"></canvas>
+        <canvas id="lineChart2" width="400" height="200"></canvas>
+
+        <script>
+            // Data for the first line chart
+            const ctx1 = document.getElementById('lineChart1').getContext('2d');
+            const lineChart1 = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['January 1', 'January 2', 'January 3', 'January 4', 'January 5', 'January 6', 'January 7'], // X-axis labels
+                    datasets: [{
+                        label: 'PH Level',
+                        data: [0, 2, 2, 1, 5, 10, 7], // Y-axis data
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Data for the second line chart with three datasets
+            const ctx2 = document.getElementById('lineChart2').getContext('2d');
+            const lineChart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ['January 1', 'January 2', 'January 3', 'January 4', 'January 5', 'January 6', 'January 7'], // X-axis labels
+                    datasets: [
+                        {
+                            label: 'Nitrogen',
+                            data: [28, 48, 40, 19, 36, 27, 40], // Nitrogen data
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)', // Color for Nitrogen
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Phosphorus',
+                            data: [45, 25, 16, 35, 50, 30, 50], // Phosphorus data
+                            fill: false,
+                            borderColor: 'rgb(255, 205, 86)', // Color for Phosphorus
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Potassium',
+                            data: [10, 40, 20, 22, 10, 25, 35], // Potassium data
+                            fill: false,
+                            borderColor: 'rgb(255, 99, 132)', // Color for Potassium
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

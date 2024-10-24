@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    height: 100%;
+    padding: 15px;
+}
+
+.sidebar h2 {
+    color: gold;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    margin-left: 220px; /* Leave space for the sidebar */
+    padding: 20px;
+    text-align: center; /* Center align text */
+}
+.control-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Light background for the container */
+}
+
+.control-container h2 {
+    margin: 0;
+}
+
+.control-container label {
+    margin-right: 10px;
+}
+
+.control-container button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.control-container button:hover {
+    background-color: #555; /* Darker background on hover */
+}
